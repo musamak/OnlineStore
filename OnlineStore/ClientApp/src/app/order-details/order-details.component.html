@@ -1,0 +1,76 @@
+<h5 id="tableLabel">Order Details</h5>
+
+<p>Complete order details.</p>
+
+<p *ngIf="!order"><em>Loading...</em></p>
+
+<div class="row">
+  <div class="col-md-6">
+    <label for="orderId"><strong>Order Id:</strong> {{order.orderId}}</label>
+    <br />
+    <label for="customerName"><strong>Customer Name:</strong> {{order.customer.firstName}}&nbsp;{{order.customer.lastName}} </label>
+    <br />
+    <label for="shippingPrice"><strong>Shipping Price:</strong> {{order.shippingPrice}}</label>
+  </div>
+  <div class="col-md-6">
+    <label for="orderDate"><strong>Order Date:</strong> {{order.orderDate | date:'fullDate'}}</label>
+    <br />
+    <label for="customerEmail"><strong>Customer Email:</strong> {{order.customer.email}}</label>
+    <br />
+    <label for="trackingNumber"><strong>Tracking Number:</strong>&nbsp;</label>
+    <div class="input-group">
+      <input #trackingNumber type="text" class="form-control" placeholder="Tracking Number" value="{{order.trackingNumber}}">
+      <span class="input-group-btn">
+        <button class="btn btn-primary" (click)="updateDetails(order.orderId, trackingNumber.value)">Update</button>
+      </span>
+    </div>
+  </div>
+</div>
+<br />
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="order.orderDetails">
+  <thead>
+    <tr>
+      <th>Details Id</th>
+      <th>Product Name</th>
+      <th>Quantity</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let orderDetail of order.orderDetails">
+      <td>{{ orderDetail.orderDetailId }}</td>
+      <td>{{ orderDetail.product.name }}</td>
+      <td>{{ orderDetail.quantity }}</td>
+      <td>{{ orderDetail.price }}</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong>Shipping Address</strong></div>
+      <div class="panel-body">
+        <label for="address">{{order.customer.shippingAddress.street1}},&nbsp;{{order.customer.shippingAddress.street2}}</label>
+        <br />
+        <label for="city">{{order.customer.shippingAddress.city}},&nbsp;{{order.customer.shippingAddress.state}}</label>
+        <br />
+        <label for="zip">Zip {{order.customer.shippingAddress.zip}}</label>
+      </div>
+    </div>
+  </div><!-- /.col-lg-6 -->
+  <div class="col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong>Billing Address</strong></div>
+      <div class="panel-body">
+        <label for="address">{{order.customer.billingAddress.street1}},&nbsp;{{order.customer.billingAddress.street2}}</label>
+        <br />
+        <label for="city">{{order.customer.billingAddress.city}},&nbsp;{{order.customer.billingAddress.state}}</label>
+        <br />
+        <label for="zip">Zip {{order.customer.billingAddress.zip}}</label>
+      </div>
+    </div>
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
